@@ -21,7 +21,7 @@ const Home = () => {
         <img
           src={Chairs}
           alt="Movie chairs"
-          className="w-full h-full object-cover"
+          className="w-full h-screen object-cover"
         />
       </div>
       <div className="w-3/5 flex justify-center items-center flex-col px-10">
