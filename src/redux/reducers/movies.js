@@ -5,7 +5,7 @@ import {
   startFetchMovieDetail,
   successFetchMovieDetail,
   errorFetchMovieDetail,
-} from "../api/actions/movies";
+} from "../actions/movies";
 
 const initialState = {
   isFetchingMovieRatings: false,

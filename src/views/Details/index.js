@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import {
   fetchMovieDetail,
   fetchMovieRatings,
-} from "../../redux/api/actions/movies";
+} from "../../redux/actions/movies";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LeftContainer from "./components/LeftContainer";
@@ -19,7 +19,7 @@ export default function Detail() {
     errorFetchingMovieRatings,
     ratings,
     movieDetail,
-  } = useSelector((state) => state.MoviesReducer);
+  } = useSelector((state) => state.moviesReducerSlice);
 
   useEffect(() => {
     dispatch(fetchMovieRatings(movieId));
@@ -28,7 +28,7 @@ export default function Detail() {
   useEffect(() => {
     dispatch(fetchMovieDetail(movieId));
   }, [dispatch, movieId]);
-
+  const { details, genres, overview, topCast } = movieDetail;
   const renderContent = () => {
     if (isLoading || isFetchingMovieDetail || isFetchingMovieRatings) {
       return <Loading message="getting information about the movie" />;
@@ -52,7 +52,6 @@ export default function Detail() {
       </>
     );
   };
-  const { details, genres, overview, topCast } = movieDetail;
 
   return (
     <div className="flex flex-row px-16 h-screen justify-center items-center">

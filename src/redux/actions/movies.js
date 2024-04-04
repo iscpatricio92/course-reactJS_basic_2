@@ -1,4 +1,15 @@
 import { createAction } from "@reduxjs/toolkit";
+
+// importar actions para efectos demostrativos
+import {
+  startFetchMovieRatings as startFetchMovieRatingsSlice,
+  successFetchMovieRatings as successFetchMovieRatingsSlice,
+  errorFetchMovieRatings as errorFetchMovieRatingsSlice,
+  startFetchMovieDetail as startFetchMovieDetailSlice,
+  successFetchMovieDetail as successFetchMovieDetailSlice,
+  errorFetchMovieDetail as errorFetchMovieDetailSlice,
+} from "../slices/movies";
+// importar actions para efectos demostrativos
 const BASE_URL = "https://imdb8.p.rapidapi.com";
 const headers = {
   "X-RapidAPI-Key": "947f168ac6msh31982b36b4f19a7p120e11jsncbf55d6d2a48",
@@ -18,20 +29,23 @@ export const errorFetchMovieDetail = createAction("ERROR_FETCH_MOVIE_DETAIL");
 
 export const fetchMovieRatings = (movieId) => async (dispatch) => {
   try {
-    dispatch(startFetchMovieRatings());
-
+    //dispatch(startFetchMovieRatings());
+    dispatch(startFetchMovieRatingsSlice());
     const url = `${BASE_URL}/title/v2/get-ratings?tconst=${movieId}`;
     const response = await fetch(url, { headers });
     const data = await response.json();
-    dispatch(successFetchMovieRatings({ data }));
+    //dispatch(successFetchMovieRatings({ data }));
+    dispatch(successFetchMovieRatingsSlice(data));
   } catch (error) {
-    dispatch(errorFetchMovieRatings({ error }));
+    //dispatch(errorFetchMovieRatings({ error }));
+    dispatch(errorFetchMovieRatingsSlice({error}));
   }
 };
 
 export const fetchMovieDetail = (movieId) => async (dispatch) => {
   try {
-    dispatch(startFetchMovieDetail());
+    //dispatch(startFetchMovieDetail());
+    dispatch(startFetchMovieDetailSlice());
 
     const overviewDetailsUrl = `${BASE_URL}/title/v2/get-overview?tconst=${movieId}`;
     const overviewDetailsResponse = await fetch(overviewDetailsUrl, {
@@ -52,14 +66,23 @@ export const fetchMovieDetail = (movieId) => async (dispatch) => {
     const getGenresData = await getGenresResponse.json();
 
     dispatch(
-      successFetchMovieDetail({
+      successFetchMovieDetailSlice({
         overview: overviewDetailsData,
         topCast: topCastData,
         details: getDetailstData,
         genres: getGenresData,
       })
     );
+    /*dispatch(
+      successFetchMovieDetail({
+        overview: overviewDetailsData,
+        topCast: topCastData,
+        details: getDetailstData,
+        genres: getGenresData,
+      })
+    );*/
   } catch (error) {
-    dispatch(errorFetchMovieDetail({ error }));
+    //dispatch(errorFetchMovieDetail({ error }));
+    dispatch(errorFetchMovieDetailSlice({error}));
   }
 };
